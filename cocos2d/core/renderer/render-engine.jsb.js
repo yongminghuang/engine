@@ -30,7 +30,7 @@
 
 // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.  
  
-var gl = window.__gl;
+var gl = window.__ccgl;
 
 var _filterGL = [
   [ gl.GL_NEAREST,  gl.GL_NEAREST_MIPMAP_NEAREST, gl.GL_NEAREST_MIPMAP_LINEAR ],
@@ -369,11 +369,11 @@ VertexFormat.prototype.element = function element (attrName) {
 
 // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.  
  
-var gl$1 = window.__gl;
+var gl$1 = window.__ccgl;
 var gfx$1 = window.gfx;
 
 window.device = gfx$1.Device.getInstance();
-window.device._gl = window.__gl;
+window.device._gl = window.__ccgl;
 
 //FIXME:
 window.device._stats = { vb: 0 };
