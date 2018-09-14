@@ -117,50 +117,24 @@
 
 // window may be undefined when first load engine from editor
 var _global = typeof window === 'undefined' ? global : window;
-function defineMacro (name, defaultValue) {
+function defineMacro(name, defaultValue) {
     // if "global_defs" not preprocessed by uglify, just declare them globally,
     // this may happened in release version's preview page.
     if (typeof _global[name] === 'undefined') {
         _global[name] = defaultValue;
     }
 }
-function defined (name) {
+function defined(name) {
     return typeof _global[name] === 'object';
 }
 
 // ensure CC_BUILD is defined
 // should not use window.CC_BUILD because we need get global_defs defined in uglify
 defineMacro('CC_BUILD', false);
-
-if (CC_BUILD) {
-    // Supports dynamically access from external scripts such as adapters and debugger.
-    // So macros should still defined in global even if inlined in engine.
-    _global.CC_BUILD = CC_BUILD;
-    _global.CC_TEST = CC_TEST;
-    _global.CC_EDITOR = CC_EDITOR;
-    _global.CC_PREVIEW = CC_PREVIEW;
-    _global.CC_DEV = CC_DEV;
-    _global.CC_DEBUG = CC_DEBUG;
-    _global.CC_JSB = CC_JSB;
-    _global.CC_WECHATGAME_SUB = CC_WECHATGAME_SUB;
-    _global.CC_WECHATGAME = CC_WECHATGAME;
-    _global.CC_QQPLAY = CC_QQPLAY;
-    _global.CC_RUNTIME = CC_RUNTIME;
-    _global.CC_SUPPORT_JIT = CC_SUPPORT_JIT;
-}
-else {
-    defineMacro('CC_TEST', defined('tap') || defined('QUnit'));
-    defineMacro('CC_EDITOR', defined('Editor') && defined('process') && ('electron' in process.versions));
-    defineMacro('CC_PREVIEW', !CC_EDITOR);
-    defineMacro('CC_DEV', true);    // (CC_EDITOR && !CC_BUILD) || CC_PREVIEW || CC_TEST
-    defineMacro('CC_DEBUG', true);  // CC_DEV || Debug Build
-    defineMacro('CC_JSB', defined('jsb'));
-    defineMacro('CC_WECHATGAME_SUB', !!(defined('wx') && wx.getSharedCanvas));
-    defineMacro('CC_WECHATGAME', !!(defined('wx') && (wx.getSystemInfoSync || wx.getSharedCanvas)));
-    defineMacro('CC_QQPLAY', defined('bk'));
-    defineMacro('CC_RUNTIME', 'function' === typeof loadRuntime);
-    defineMacro('CC_SUPPORT_JIT', !(CC_WECHATGAME || CC_QQPLAY || CC_RUNTIME));
-}
+defineMacro('CC_WECHATGAME', defined('wx') && wx.getSystemInfoSync);
+defineMacro('CC_QQPLAY', defined('bk'));
+defineMacro('CC_RUNTIME', false);
+defineMacro('CC_SUPPORT_JIT', !(CC_WECHATGAME || CC_QQPLAY || CC_RUNTIME));
 
 //
 

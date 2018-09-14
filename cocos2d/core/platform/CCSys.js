@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-function initSys () {
+function initSys() {
     /**
      * System variables
      * @class sys
@@ -549,11 +549,11 @@ function initSys () {
     else if (CC_JSB) {
         var platform = sys.platform = __getPlatform();
         sys.isMobile = (platform === sys.ANDROID ||
-                        platform === sys.IPAD ||
-                        platform === sys.IPHONE ||
-                        platform === sys.WP8 ||
-                        platform === sys.TIZEN ||
-                        platform === sys.BLACKBERRY);
+            platform === sys.IPAD ||
+            platform === sys.IPHONE ||
+            platform === sys.WP8 ||
+            platform === sys.TIZEN ||
+            platform === sys.BLACKBERRY);
 
         sys.os = __getOS();
         sys.language = __getCurrentLanguage();
@@ -579,7 +579,7 @@ function initSys () {
             "webp": true,
         };
 
-       if (sys.isMobile) {
+        if (sys.isMobile) {
             capabilities["accelerometer"] = true;
             capabilities["touches"] = true;
         } else {
@@ -781,13 +781,13 @@ function initSys () {
          */
         sys.browserType = sys.BROWSER_TYPE_UNKNOWN;
         /* Determine the browser type */
-        (function(){
+        (function () {
             var typeReg1 = /mqqbrowser|micromessenger|qq|sogou|qzone|liebao|maxthon|ucbs|360 aphone|360browser|baiduboxapp|baidubrowser|maxthon|mxbrowser|miuibrowser/i;
             var typeReg2 = /qqbrowser|ucbrowser/i;
             var typeReg3 = /chrome|safari|firefox|trident|opera|opr\/|oupeng/i;
             var browserTypes = typeReg1.exec(ua);
-            if(!browserTypes) browserTypes = typeReg2.exec(ua);
-            if(!browserTypes) browserTypes = typeReg3.exec(ua);
+            if (!browserTypes) browserTypes = typeReg2.exec(ua);
+            if (!browserTypes) browserTypes = typeReg3.exec(ua);
 
             var browserType = browserTypes ? browserTypes[0].toLowerCase() : sys.BROWSER_TYPE_UNKNOWN;
             if (CC_WECHATGAME)
@@ -818,11 +818,11 @@ function initSys () {
          */
         sys.browserVersion = "";
         /* Determine the browser version number */
-        (function(){
+        (function () {
             var versionReg1 = /(mqqbrowser|micromessenger|qq|sogou|qzone|liebao|maxthon|uc|ucbs|360 aphone|360|baiduboxapp|baidu|maxthon|mxbrowser|miui)(mobile)?(browser)?\/?([\d.]+)/i;
             var versionReg2 = /(qqbrowser|chrome|safari|firefox|trident|opera|opr\/|oupeng)(mobile)?(browser)?\/?([\d.]+)/i;
             var tmp = ua.match(versionReg1);
-            if(!tmp) tmp = ua.match(versionReg2);
+            if (!tmp) tmp = ua.match(versionReg2);
             sys.browserVersion = tmp ? tmp[4] : "";
         })();
 
@@ -877,10 +877,10 @@ function initSys () {
                 cc.warnID(5200);
             };
             sys.localStorage = {
-                getItem : warn,
-                setItem : warn,
-                removeItem : warn,
-                clear : warn
+                getItem: warn,
+                setItem: warn,
+                removeItem: warn,
+                clear: warn
             };
         }
 
@@ -897,41 +897,41 @@ function initSys () {
             if (_supportWebGL && sys.os === sys.OS_ANDROID) {
                 var browserVer = parseFloat(sys.browserVersion);
                 switch (sys.browserType) {
-                case sys.BROWSER_TYPE_MOBILE_QQ:
-                case sys.BROWSER_TYPE_BAIDU:
-                case sys.BROWSER_TYPE_BAIDU_APP:
-                    // QQ & Baidu Brwoser 6.2+ (using blink kernel)
-                    if (browserVer >= 6.2) {
-                        _supportWebGL = true;
-                    }
-                    else {
+                    case sys.BROWSER_TYPE_MOBILE_QQ:
+                    case sys.BROWSER_TYPE_BAIDU:
+                    case sys.BROWSER_TYPE_BAIDU_APP:
+                        // QQ & Baidu Brwoser 6.2+ (using blink kernel)
+                        if (browserVer >= 6.2) {
+                            _supportWebGL = true;
+                        }
+                        else {
+                            _supportWebGL = false;
+                        }
+                        break;
+                    case sys.BROWSER_TYPE_ANDROID:
+                        // Android 5+ default browser
+                        if (sys.osMainVersion && sys.osMainVersion >= 5) {
+                            _supportWebGL = true;
+                        }
+                        break;
+                    case sys.BROWSER_TYPE_CHROME:
+                        // Chrome on android supports WebGL from v. 30
+                        if (browserVer >= 30.0) {
+                            _supportWebGL = true;
+                        } else {
+                            _supportWebGL = false;
+                        }
+                        break;
+                    case sys.BROWSER_TYPE_UC:
+                        if (browserVer > 11.0) {
+                            _supportWebGL = true;
+                        } else {
+                            _supportWebGL = false;
+                        }
+                        break;
+                    case sys.BROWSER_TYPE_360:
                         _supportWebGL = false;
-                    }
-                    break;
-                case sys.BROWSER_TYPE_ANDROID:
-                    // Android 5+ default browser
-                    if (sys.osMainVersion && sys.osMainVersion >= 5) {
-                        _supportWebGL = true;
-                    }
-                    break;
-                case sys.BROWSER_TYPE_CHROME:
-                    // Chrome on android supports WebGL from v. 30
-                    if (browserVer >= 30.0) {
-                        _supportWebGL = true;
-                    } else {
-                        _supportWebGL = false;
-                    }
-                    break;
-                case sys.BROWSER_TYPE_UC:
-                    if (browserVer > 11.0) {
-                        _supportWebGL = true;
-                    } else {
-                        _supportWebGL = false;
-                    }
-                    break;
-                case sys.BROWSER_TYPE_360:
-                    _supportWebGL = false;
-                    break;
+                        break;
                 }
             }
         }
@@ -969,7 +969,7 @@ function initSys () {
          *
          * May be modifications for a few browser version
          */
-        (function(){
+        (function () {
 
             var DEBUG = false;
 
@@ -978,7 +978,7 @@ function initSys () {
             // check if browser supports Web Audio
             // check Web Audio's context
             var supportWebAudio = sys.browserType !== sys.BROWSER_TYPE_WECHAT_GAME &&
-                                !!(window.AudioContext || window.webkitAudioContext || window.mozAudioContext);
+                !!(window.AudioContext || window.webkitAudioContext || window.mozAudioContext);
 
             __audioSupport = { ONLY_ONE: false, WEB_AUDIO: supportWebAudio, DELAY_CREATE_CTX: false };
 
@@ -1000,8 +1000,8 @@ function initSys () {
                 }
             }
 
-            if(DEBUG){
-                setTimeout(function(){
+            if (DEBUG) {
+                setTimeout(function () {
                     cc.log('browse type: ' + sys.browserType);
                     cc.log('browse version: ' + version);
                     cc.log('MULTI_CHANNEL: ' + __audioSupport.MULTI_CHANNEL);
@@ -1014,20 +1014,20 @@ function initSys () {
         try {
             if (__audioSupport.WEB_AUDIO) {
                 __audioSupport.context = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext)();
-                if(__audioSupport.DELAY_CREATE_CTX) {
-                    setTimeout(function(){ __audioSupport.context = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext)(); }, 0);
+                if (__audioSupport.DELAY_CREATE_CTX) {
+                    setTimeout(function () { __audioSupport.context = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext)(); }, 0);
                 }
             }
-        } catch(error) {
+        } catch (error) {
             __audioSupport.WEB_AUDIO = false;
             cc.logID(5201);
         }
 
         var formatSupport = [];
 
-        (function(){
+        (function () {
             var audio = document.createElement('audio');
-            if(audio.canPlayType) {
+            if (audio.canPlayType) {
                 var ogg = audio.canPlayType('audio/ogg; codecs="vorbis"');
                 if (ogg) formatSupport.push('.ogg');
                 var mp3 = audio.canPlayType('audio/mpeg');
@@ -1096,7 +1096,7 @@ function initSys () {
      * @method getNetworkType
      * @return {NetworkType}
      */
-    sys.getNetworkType = function() {
+    sys.getNetworkType = function () {
         // TODO: need to implement this for mobile phones.
         return sys.NetworkType.LAN;
     };
@@ -1110,7 +1110,7 @@ function initSys () {
      * @method getBatteryLevel
      * @return {Number} - 0.0 ~ 1.0
      */
-    sys.getBatteryLevel = function() {
+    sys.getBatteryLevel = function () {
         // TODO: need to implement this for mobile phones.
         return 1.0;
     };
@@ -1121,6 +1121,20 @@ function initSys () {
      */
     sys.garbageCollect = function () {
         // N/A in web
+        if (CC_JSB) {
+            __jsc__.garbageCollect();
+        }
+    };
+
+    /**
+     * Dumps rooted objects, only available in JSB
+     * @method dumpRoot
+     */
+    sys.dumpRoot = function () {
+        // N/A in web
+        if (CC_JSB) {
+            __jsc__.dumpRoot();
+        }
     };
 
     /**
